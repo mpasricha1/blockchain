@@ -59,6 +59,27 @@ def add_block():
 	TPCoins.append (block)
 	last_block_hash = digest
 
+def logged_in():
+	do_more = True
+	while do_more:
+		choice = printer.print_welcome_screen()
+		print(type(choice))
+
+		if choice == '1':
+			print('Coming soon')
+		if choice == '2':
+			print('Coming soon')
+		if choice == '3':
+			do_more = False
+		
+		print('Would you like to logout?')
+		choice = input('Choice(y/n): ')
+
+		if choice.lower() == 'y' or choice.lower() == 'yes':
+			quit()
+		else: 
+			printer.print_welcome_screen()
+
 
 def main():
 	choice = printer.print_login_choice_screen()
@@ -72,31 +93,14 @@ def main():
 			main()
 		
 		if credentials['password'] == user[0]:
-			do_more = True
-
-			while do_more:
-				choice = printer.print_welcome_screen()
-				print(type(choice))
-
-				if choice == '1':
-					print('Coming soon')
-				if choice == '2':
-					print('Coming soon')
-				if choice == '3':
-					do_more = False
-
-			print('Would you like to logout?')
-			choice = input('Choice(y/n): ')
-
-			if choice.lower() == 'y' or choice.lower() == 'yes':
-				quit()
-			else: 
-				printer.print_welcome_screen()
+			logged_in()
 		else:
 			printer.print_login_error()
 			main()
 	elif choice == '2':
-		print('Coming Soon')		
+		new_user = printer.print_new_user_screen()
+		db.insert_new_user(new_user)
+		logged_in()
 	elif choice == '3':
 		print('Goodbye.')
 		exit() 
