@@ -13,6 +13,27 @@ class Printer:
 	   print ("time: " + str(dict['time']))
 	   print ('-----')
 
+	def print_login_choice_screen(self):
+		print('-------------------------')
+		print('1. Login')
+		print('2. Create new account')
+		print('-------------------------')
+		print('')
+		print(': ')
+		choice = input() 
+
+		return choice
+
+	def print_login_credentials_screen(self):
+		credentials = {}
+		print('-------------------------')
+		print('Enter username: ')
+		credentials['user_name'] = input()
+		print('Enter password: ')
+		credentials['password'] = stdiomask.getpass()
+
+		return credentials
+ 
 	def print_welcome_screen(self):
 	 	print('-------------------------')
 	 	print('Welcome to Somecoin name')

@@ -47,4 +47,17 @@ class DBConnector:
 		with self.engine.connect() as conn:
 			result = conn.execute(stmt)
 			conn.close()
-			print(result)
+			
+			new_id = result.inserted_primary_key[0]
+
+		self.create_account(new_id)
+
+	def create_account(self, id):
+		table = self.reflect_table('account')
+
+		stmt = insert(table).values(userid=id, balance=0)
+
+		with self.engine.connect() as conn:
+			result = conn.execute(stmt)
+			conn.close()
+
