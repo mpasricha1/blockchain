@@ -2,12 +2,14 @@ from client import Client
 from transaction import Transaction
 from block import Block
 from db_connector import DBConnector
+from printer import Printer
 import hashlib
 
 TPCoins = []
 transactions = []
 last_transaction_index = 0
 last_block_hash = ""
+printer = Printer()
 
 def display_transaction(transaction):
    dict = transaction.to_dict()
@@ -31,7 +33,7 @@ def dump_blockchain (blockchain):
 			block_temp = TPCoins[x]
 			print ("block # " + str(x))
 			for transaction in block_temp.verified_transactions:
-				display_transaction (transaction)
+				printer.display_transaction (transaction)
 				print ('--------------')
 				print ('=====================================')
 
@@ -67,10 +69,10 @@ def add_block():
 	TPCoins.append (block)
 	last_block_hash = digest
 
-db = DBConnector()
+choice = printer.print_welcome_message()
 
-data = db.select_table('users')
-print(data)
+if choice == 1: 
+	printer.print_new_user_screen()
 
 
 # u1 = Client()
