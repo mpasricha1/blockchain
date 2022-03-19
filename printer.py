@@ -17,6 +17,7 @@ class Printer:
 		print('-------------------------')
 		print('1. Login')
 		print('2. Create new account')
+		print('3. Quit')
 		print('-------------------------')
 		print('')
 		choice = input('Choice: ')
@@ -54,3 +55,9 @@ class Printer:
 		new_user['password'] = stdiomask.getpass('Enter password: ')
 
 		return new_user
+
+	def print_login_error(self):
+		print('')
+		print('')
+		print('Username or password incorrect')
+		print('')

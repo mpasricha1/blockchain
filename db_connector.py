@@ -16,7 +16,7 @@ class DBConnector:
 
 	def connect(self):
 		try:
-			return sqlalchemy.create_engine(f'postgresql+psycopg2://{self.user}:{self.password}@{self.host}/{self.database}', echo=True)
+			return sqlalchemy.create_engine(f'postgresql+psycopg2://{self.user}:{self.password}@{self.host}/{self.database}')
 		except Exception as e: 
 			print(e)
 
