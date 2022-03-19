@@ -28,15 +28,17 @@ class DBConnector:
 
 		return sqlalchemy.Table(table_name, metadata , autoload=True)
 
-	def select_table(self, table_name):
-		table = self.reflect_table(table_name)
-		conn = self.engine.connect()
+	def get_user(self, user_name):
+		table = self.reflect_table('users')
 
-		s = select([table])
-		results = conn.execute(s)
-		conn.close()
+		stmt = select([table.c.password]).where(table.c.username == user_name)
 
-		return results.first()
+		with self.engine.connect() as conn: 
+			result = conn.execute(stmt)
+			conn.close() 
+
+		return result.first()
+
 
 	def insert_new_user(self, new_user):
 		table = self.reflect_table('users')

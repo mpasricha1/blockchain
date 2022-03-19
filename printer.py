@@ -19,18 +19,15 @@ class Printer:
 		print('2. Create new account')
 		print('-------------------------')
 		print('')
-		print(': ')
-		choice = input() 
+		choice = input('Choice: ')
 
 		return choice
 
 	def print_login_credentials_screen(self):
 		credentials = {}
 		print('-------------------------')
-		print('Enter username: ')
-		credentials['user_name'] = input()
-		print('Enter password: ')
-		credentials['password'] = stdiomask.getpass()
+		credentials['user_name'] = input('Enter username: ')
+		credentials['password'] = stdiomask.getpass('Enter password: ')
 
 		return credentials
  
@@ -41,9 +38,9 @@ class Printer:
 	 	print('')
 	 	print('What would you like to do?')
 	 	print('')
-	 	print('1. Add New User')
+	 	print('1. View Balance')
 	 	print('2.')
-	 	print('3.')
+	 	print('3. Quit')
 
 	 	choice = input('Please enter selection: ')
 	 	return choice
@@ -51,13 +48,9 @@ class Printer:
 	def print_new_user_screen(self):
 		new_user = {}
 		print('----------------------')
-		print('Enter new users first name: ')
-		new_user['first_name'] = input()
-		print('Enter new users last name: ')
-		new_user['last_name'] = input()
-		print('Enter username: ')
-		new_user['user_name'] = input()
-		print('Enter password: ')
-		new_user['password'] = stdiomask.getpass()
+		new_user['first_name'] = input('Enter new users first name: ')
+		new_user['last_name'] = input('Enter new users last name: ')
+		new_user['user_name'] = input('Enter username: ')
+		new_user['password'] = stdiomask.getpass('Enter password: ')
 
 		return new_user
