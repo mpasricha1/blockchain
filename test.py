@@ -10,17 +10,7 @@ transactions = []
 last_transaction_index = 0
 last_block_hash = ""
 printer = Printer()
-
-def display_transaction(transaction):
-   dict = transaction.to_dict()
-   print ("sender: " + dict['sender'])
-   print ('-----')
-   print ("recipient: " + dict['recipient'])
-   print ('-----')
-   print ("value: " + str(dict['value']))
-   print ('-----')
-   print ("time: " + str(dict['time']))
-   print ('-----')
+db = DBConnector()
 
 def create_transaction(sender, receiver, amount): 
 	t = Transaction(sender, receiver, amount)
@@ -69,11 +59,11 @@ def add_block():
 	TPCoins.append (block)
 	last_block_hash = digest
 
-choice = printer.print_welcome_message()
+choice = printer.print_welcome_screen()
 
-if choice == 1: 
-	printer.print_new_user_screen()
-
+if choice == '1':
+	new_user = printer.print_new_user_screen()
+	db.insert_new_user(new_user)
 
 # u1 = Client()
 # u2 = Client()

@@ -1,5 +1,5 @@
 import sqlalchemy
-from sqlalchemy.sql import select, update, text
+from sqlalchemy.sql import select, update, text, insert
 import psycopg2
 import configparser
 
@@ -37,3 +37,14 @@ class DBConnector:
 		conn.close()
 
 		return results.first()
+
+	def insert_new_user(self, new_user):
+		table = self.reflect_table('users')
+
+		stmt = insert(table).values(firstname=new_user['first_name'], lastname=new_user['last_name'],
+									username = new_user['user_name'], password = new_user['password'])
+
+		with self.engine.connect() as conn:
+			result = conn.execute(stmt)
+			conn.close()
+			print(result)

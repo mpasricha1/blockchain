@@ -1,3 +1,5 @@
+import stdiomask
+
 class Printer:
 
 	def display_transaction(self,transaction):
@@ -11,7 +13,7 @@ class Printer:
 	   print ("time: " + str(dict['time']))
 	   print ('-----')
 
-	def print_welcome_message(self):
+	def print_welcome_screen(self):
 	 	print('-------------------------')
 	 	print('Welcome to Somecoin name')
 	 	print('------------------------')
@@ -24,3 +26,17 @@ class Printer:
 
 	 	choice = input('Please enter selection: ')
 	 	return choice
+
+	def print_new_user_screen(self):
+		new_user = {}
+		print('----------------------')
+		print('Enter new users first name: ')
+		new_user['first_name'] = input()
+		print('Enter new users last name: ')
+		new_user['last_name'] = input()
+		print('Enter username: ')
+		new_user['user_name'] = input()
+		print('Enter password: ')
+		new_user['password'] = stdiomask.getpass()
+
+		return new_user
