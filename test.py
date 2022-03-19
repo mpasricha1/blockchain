@@ -1,6 +1,7 @@
 from client import Client
 from transaction import Transaction
 from block import Block
+from db_connector import DBConnector
 import hashlib
 
 TPCoins = []
@@ -66,29 +67,33 @@ def add_block():
 	TPCoins.append (block)
 	last_block_hash = digest
 
+db = DBConnector()
+
+data = db.select_table('users')
+print(data)
 
 
-u1 = Client()
-u2 = Client()
+# u1 = Client()
+# u2 = Client()
 
-t0 = Transaction('Genesis', u1.identity, 500.0)
-create_transaction(u1, u2.identity, 40.0)
-create_transaction(u1, u2.identity, 10.0)
-create_transaction(u1, u2.identity, 540.0)
-
-
-block0 = Block()
-block0.previous_block_hash = None
-block0.nonce = None
-
-block0.verified_transactions.append(t0)
-digest = hash(block0)
-block0.last_block_hash = digest
-
-TPCoins.append(block0)
+# t0 = Transaction('Genesis', u1.identity, 500.0)
+# create_transaction(u1, u2.identity, 40.0)
+# create_transaction(u1, u2.identity, 10.0)
+# create_transaction(u1, u2.identity, 540.0)
 
 
-add_block()
+# block0 = Block()
+# block0.previous_block_hash = None
+# block0.nonce = None
 
-dump_blockchain(TPCoins)
+# block0.verified_transactions.append(t0)
+# digest = hash(block0)
+# block0.last_block_hash = digest
+
+# TPCoins.append(block0)
+
+
+# add_block()
+
+# dump_blockchain(TPCoins)
 
