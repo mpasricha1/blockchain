@@ -2,6 +2,7 @@ from client import Client
 from transaction import Transaction
 from block import Block
 from db_connector import DBConnector
+from user import User
 from printer import Printer
 import hashlib
 import pickle as cPickle
@@ -95,11 +96,10 @@ def main():
 		
 		if credentials['password'] == user[4]:
 			client = cPickle.loads(user[5])
-			print(client.identity)
-			# user['client'] = client
-			# print(client)
-			# logged_on_users.append(user)
-			# logged_in()
+
+			user = User(user, client)
+			logged_in_users.append(user)
+			logged_in()
 		else:
 			printer.print_login_error()
 			main()
