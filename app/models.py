@@ -7,4 +7,14 @@ class User(db.Model):
 	username = db.Column(db.String(64), unique=True)
 
 	def __repr__(self):
-		return '<pipelines {}>'.format(self.name)
+		return '<user {}>'.format(self.name)
+
+class Account(db.Model): 
+	id = db.Column(db.Integer, primary_key=True)
+	account_number = Column(db.Integer)
+	balance = db.Column(db.Integer)
+	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+
+	def __repr__(self):
+		return '<account {}>'.format(self.name)
