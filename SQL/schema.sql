@@ -3,17 +3,21 @@ create table users (
 	firstname VARCHAR(50), 
 	lastname VARCHAR(50), 
 	username VARCHAR(100), 
-	password VARCHAR(20)
-
+	password VARCHAR(20),
+	privatekey VARCHAR(1024), 
+	publickey VARCHAR(1024), 
+	signer VARCHAR(1024), 
+	identity VARCHAR(1024)
 )
 drop table users
-select * from users
+select * from user
 
 create table account(
 	id SERIAL Primary Key,
 	userid INT NOT NULL,
 	accountnumber SERIAL NOT NULL, 
-	balance INT 
+	balance INT, 
+	CONSTRAINT fk_users FOREIGN KEY(user_id) REFERENCES users(id)
 )
 drop table account
 select * from account

@@ -22,4 +22,3 @@ class Client:
 	@property
 	def identity(self):
 		return binascii.hexlify(self._public_key.exportKey(format='DER')).decode('ascii')
-	

@@ -4,9 +4,11 @@ from block import Block
 from db_connector import DBConnector
 from printer import Printer
 import hashlib
+import pickle as cPickle
 
 TPCoins = []
 transactions = []
+logged_in_users = []
 last_transaction_index = 0
 last_block_hash = ""
 printer = Printer()
@@ -63,7 +65,6 @@ def logged_in():
 	do_more = True
 	while do_more:
 		choice = printer.print_welcome_screen()
-		print(type(choice))
 
 		if choice == '1':
 			print('Coming soon')
@@ -72,13 +73,13 @@ def logged_in():
 		if choice == '3':
 			do_more = False
 		
-		print('Would you like to logout?')
-		choice = input('Choice(y/n): ')
+	print('Would you like to logout?')
+	choice = input('Choice(y/n): ')
 
-		if choice.lower() == 'y' or choice.lower() == 'yes':
-			quit()
-		else: 
-			printer.print_welcome_screen()
+	if choice.lower() == 'y' or choice.lower() == 'yes':
+		main()
+	else: 
+		logged_in()
 
 
 def main():
@@ -92,18 +93,27 @@ def main():
 			printer.print_login_error()
 			main()
 		
-		if credentials['password'] == user[0]:
+		if credentials['password'] == user[4]:
+			print(user[5])
+			client = cPickle.loads(bytes(user[5], 'utf8'))
+			user['client'] = client
+			print(client)
+			logged_on_users.append(user)
 			logged_in()
 		else:
 			printer.print_login_error()
 			main()
 	elif choice == '2':
 		new_user = printer.print_new_user_screen()
-		db.insert_new_user(new_user)
+		client = Client()
+
+		client_pickle = cPickle.dumps(client)
+
+		db.insert_new_user(new_user, client_pickle)
 		logged_in()
 	elif choice == '3':
 		print('Goodbye.')
-		exit() 
+		exit()
 
 if __name__ == "__main__":
 	main()

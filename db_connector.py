@@ -3,6 +3,7 @@ from sqlalchemy.sql import select, update, text, insert
 import psycopg2
 import configparser
 
+
 config = configparser.ConfigParser()
 config.read('./configs/db_config.ini')
 
@@ -31,7 +32,7 @@ class DBConnector:
 	def get_user(self, user_name):
 		table = self.reflect_table('users')
 
-		stmt = select([table.c.password]).where(table.c.username == user_name)
+		stmt = select([table]).where(table.c.username == user_name)
 
 		with self.engine.connect() as conn: 
 			result = conn.execute(stmt)
@@ -40,11 +41,12 @@ class DBConnector:
 		return result.first()
 
 
-	def insert_new_user(self, new_user):
+	def insert_new_user(self, new_user, client):
 		table = self.reflect_table('users')
 
 		stmt = insert(table).values(firstname=new_user['first_name'], lastname=new_user['last_name'],
-									username = new_user['user_name'], password = new_user['password'])
+									username = new_user['user_name'], password = new_user['password'],
+									clientpickle=client)
 
 		with self.engine.connect() as conn:
 			result = conn.execute(stmt)
