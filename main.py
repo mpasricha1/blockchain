@@ -94,12 +94,12 @@ def main():
 			main()
 		
 		if credentials['password'] == user[4]:
-			print(user[5])
-			client = cPickle.loads(bytes(user[5], 'utf8'))
-			user['client'] = client
-			print(client)
-			logged_on_users.append(user)
-			logged_in()
+			client = cPickle.loads(user[5])
+			print(client.identity)
+			# user['client'] = client
+			# print(client)
+			# logged_on_users.append(user)
+			# logged_in()
 		else:
 			printer.print_login_error()
 			main()
