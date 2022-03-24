@@ -1,4 +1,6 @@
 import stdiomask
+from tqdm import tqdm
+import time
 
 class Printer:
 
@@ -61,3 +63,28 @@ class Printer:
 		print('')
 		print('Username or password incorrect')
 		print('')
+
+	def print_progress_bar(self, sleep):
+		for i in tqdm(range(100), desc='Getting your balance...'):
+			time.sleep(sleep)
+
+	def print_blanks(self,num):
+		for x in range(num): 
+			print('')
+
+	def print_balance(self, user, balance): 
+		self.print_blanks(10)
+
+		print('--------------------------------------------')
+		self.print_blanks(2)
+		print(f'Hello {user.first_name} {user.last_name}')
+		print(f'Your current cash balance is ${balance}')
+
+		if balance == 0:
+			print('')
+			print('Please deposit some funds to make some transactions')
+
+		choice = input('Would you like to deposit funds now? (y/n):')
+		self.print_blanks(10)
+
+	

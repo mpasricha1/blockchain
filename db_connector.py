@@ -65,3 +65,13 @@ class DBConnector:
 			result = conn.execute(stmt)
 			conn.close()
 
+	def get_balance(self, user_id):
+		table = self.reflect_table('account')
+
+		stmt = select([table.c.balance]).where(table.c.userid == user_id)
+
+		with self.engine.connect() as conn:
+			result = conn.execute(stmt)
+			conn.close()
+
+		return result.first()

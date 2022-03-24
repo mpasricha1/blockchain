@@ -62,13 +62,18 @@ def add_block():
 	TPCoins.append (block)
 	last_block_hash = digest
 
-def logged_in():
+def logged_in(user):
 	do_more = True
 	while do_more:
 		choice = printer.print_welcome_screen()
 
 		if choice == '1':
-			print('Coming soon')
+			printer.print_progress_bar(0.01)
+			balance = db.get_balance(user.user_id)
+			choice = printer.print_balance(user, balance[0])
+
+			if choice.lower() == 'y':
+				deposit_funds()
 		if choice == '2':
 			print('Coming soon')
 		if choice == '3':
@@ -97,9 +102,9 @@ def main():
 		if credentials['password'] == user[4]:
 			client = cPickle.loads(user[5])
 
-			user = User(user, client)
+			user = User(user,client)
 			logged_in_users.append(user)
-			logged_in()
+			logged_in(user)
 		else:
 			printer.print_login_error()
 			main()
