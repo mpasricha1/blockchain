@@ -68,12 +68,11 @@ def logged_in(user):
 		choice = printer.print_welcome_screen()
 
 		if choice == '1':
-			printer.print_progress_bar(0.01)
 			balance = db.get_balance(user.user_id)
 			choice = printer.print_balance(user, balance[0])
 
 			if choice.lower() == 'y':
-				deposit_funds()
+				deposit_funds(user)
 		if choice == '2':
 			print('Coming soon')
 		if choice == '3':
@@ -85,7 +84,27 @@ def logged_in(user):
 	if choice.lower() == 'y' or choice.lower() == 'yes':
 		main()
 	else: 
-		logged_in()
+		logged_in(user)
+
+def deposit_funds(user):
+	bank_accounts = db.get_bank_accounts(user.user_id)
+
+	if bank_accounts:
+		deposit  = printer.print_deposit_input_screen(bank_accounts)
+		printer.print_deposit_load_screen()
+		db.deposit_from_bank(user.user_id, deposit)
+		logged_in(user)
+	else:
+		choice = printer.print_no_bank_accounts()
+
+		if choice.lower() == 'y':
+			bank = printer.print_new_bank_screen()
+			db.insert_new_bank(user.user_id, bank)
+
+			deposit_funds(user)
+		else:
+			main()
+
 
 
 def main():
@@ -115,7 +134,9 @@ def main():
 		client_pickle = cPickle.dumps(client)
 
 		db.insert_new_user(new_user, client_pickle)
-		logged_in()
+		user = User(user,client)
+		logged_in_users.append(user)
+		logged_in(user)
 	elif choice == '3':
 		print('Goodbye.')
 		exit()

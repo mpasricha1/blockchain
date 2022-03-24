@@ -75,3 +75,37 @@ class DBConnector:
 			conn.close()
 
 		return result.first()
+
+	def get_bank_accounts(self, user_id): 
+		table = self.reflect_table('bank_accounts')
+
+		stmt = select([table]).where(table.c.userid == user_id)
+
+		with self.engine.connect() as conn:
+			result = conn.execute(stmt)
+			conn.close()
+
+		return result.first()
+
+	def insert_new_bank(self, user_id, bank):
+		table = self.reflect_table('bank_accounts')
+
+		stmt = insert(table).values(userid = user_id, bankname= bank['bank_name'],
+								    routingnumber = bank['routing_number'], accountnumber = bank['account_number'])
+
+		with self.engine.connect() as conn:
+			result = conn.execute(stmt)
+			conn.close()
+
+	def deposit_from_bank(self, user_id, deposit):
+		table = self.reflect_table('account')
+
+		with self.engine.connect() as conn:
+			stmt_select = select([table.c.balance]).where(table.c.userid == user_id)
+			result = conn.execute(stmt_select)
+
+			balance = result.first()
+
+			stmt_update = update(table).values(balance=int(deposit['amount']) + int(balance[0])).where(table.c.userid == user_id)
+			result = conn.execute(stmt_update)
+			conn.close()

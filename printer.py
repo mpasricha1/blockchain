@@ -43,7 +43,7 @@ class Printer:
 	 	print('')
 	 	print('1. View Balance')
 	 	print('2.')
-	 	print('3. Quit')
+	 	print('3. Logout')
 
 	 	choice = input('Please enter selection: ')
 	 	return choice
@@ -64,15 +64,16 @@ class Printer:
 		print('Username or password incorrect')
 		print('')
 
-	def print_progress_bar(self, sleep):
-		for i in tqdm(range(100), desc='Getting your balance...'):
+	def print_progress_bar(self, sleep, message):
+		for i in tqdm(range(100), desc=message):
 			time.sleep(sleep)
 
 	def print_blanks(self,num):
 		for x in range(num): 
 			print('')
 
-	def print_balance(self, user, balance): 
+	def print_balance(self, user, balance):
+		self.print_progress_bar(0.01, 'Getting bank accounts..')
 		self.print_blanks(10)
 
 		print('--------------------------------------------')
@@ -86,5 +87,48 @@ class Printer:
 
 		choice = input('Would you like to deposit funds now? (y/n):')
 		self.print_blanks(10)
+
+		return choice
+
+	def print_no_bank_accounts(self):
+		print('You have not linked any bank accounts')
+		
+		choice = input('Would you like to link one now? (y/n): ')
+
+		return choice
+
+	def print_new_bank_screen(self): 
+		new_bank = {}
+
+		new_bank['bank_name'] = input('Enter bank name: ')
+		new_bank['routing_number'] = input('Enter routing number: ')
+		new_bank['account_number'] = input('Enter account number: ')
+
+		self.print_progress_bar(0.01, 'Connecting to your bank...')
+		self.print_progress_bar(0.01, 'Verifying account...')
+
+		return new_bank
+
+	def print_deposit_input_screen(self, bank_accounts):
+		deposit = {}
+		print('----------------------')
+		print('Bank list')
+		print('----------------------')
+		print(bank_accounts[2])
+		self.print_blanks(2)
+
+		deposit['bank'] = input('Choose your bank account: ')
+		deposit['amount'] = input('Enter Amount: $')
+
+		return deposit
+
+	def print_deposit_load_screen(self):
+		self.print_progress_bar(0.01, 'Connecting to your bank...')
+		self.print_progress_bar(0.01, 'Verifying transaction...')
+		self.print_progress_bar(0.01, 'Transfering funds...')
+
+
+
+
 
 	
