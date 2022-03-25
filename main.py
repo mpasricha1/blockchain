@@ -15,8 +15,21 @@ last_block_hash = ""
 printer = Printer()
 db = DBConnector()
 
+def initiate_block(user):
+	t0 = Transaction('Genesis', user.identity, 0)
+	block0 = Block()
+	block0.previous_block_hash = None
+	block0.nonce = None
+
+	block0.verified_transactions.append(t0)
+	digest = hash(block0)
+	block0.last_block_hash = digest
+
+	TPCoins.append(block0)
+
 def create_transaction(sender, receiver, amount): 
-	t = Transaction(sender, receiver, amount)
+	t = Transaction(sender, receiver.identity, amount)
+	t.print_self()
 	t.sign_transaction()
 	transactions.append(t)
 
@@ -74,12 +87,19 @@ def logged_in(user):
 			if choice.lower() == 'y':
 				deposit_funds(user)
 		if choice == '2':
-			print('Coming soon')
+			trans = printer.print_new_transaction_screen()
+			receiver = db.get_user(trans['user_name'])
+			receiver_client = cPickle.loads(receiver[5])
+			create_transaction(user.client, receiver_client, trans['amount'])
+
+
+
+
 		if choice == '3':
 			do_more = False
 		
 	print('Would you like to logout?')
-	choice = input('Choice(y/n): ')
+	choice = input('Choice (y/n): ')
 
 	if choice.lower() == 'y' or choice.lower() == 'yes':
 		main()
@@ -104,8 +124,6 @@ def deposit_funds(user):
 			deposit_funds(user)
 		else:
 			main()
-
-
 
 def main():
 	choice = printer.print_login_choice_screen()
@@ -137,34 +155,14 @@ def main():
 		user = User(user,client)
 		logged_in_users.append(user)
 		logged_in(user)
-	elif choice == '3':
+	else:
 		print('Goodbye.')
 		exit()
 
 if __name__ == "__main__":
+	seed_client = Client()
+	initiate_block(seed_client)
 	main()
 
-# u1 = Client()
-# u2 = Client()
 
-# t0 = Transaction('Genesis', u1.identity, 500.0)
-# create_transaction(u1, u2.identity, 40.0)
-# create_transaction(u1, u2.identity, 10.0)
-# create_transaction(u1, u2.identity, 540.0)
-
-
-# block0 = Block()
-# block0.previous_block_hash = None
-# block0.nonce = None
-
-# block0.verified_transactions.append(t0)
-# digest = hash(block0)
-# block0.last_block_hash = digest
-
-# TPCoins.append(block0)
-
-
-# add_block()
-
-# dump_blockchain(TPCoins)
 

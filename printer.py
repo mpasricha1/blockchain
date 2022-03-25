@@ -42,7 +42,7 @@ class Printer:
 	 	print('What would you like to do?')
 	 	print('')
 	 	print('1. View Balance')
-	 	print('2.')
+	 	print('2. Create Transaction')
 	 	print('3. Logout')
 
 	 	choice = input('Please enter selection: ')
@@ -127,8 +127,12 @@ class Printer:
 		self.print_progress_bar(0.01, 'Verifying transaction...')
 		self.print_progress_bar(0.01, 'Transfering funds...')
 
+	def print_new_transaction_screen(self):
+		transaction = {} 
+		self.print_blanks(5)
+		transaction['user_name'] = input('Enter user name to start transaction with: ')
+		transaction['amount'] = input('Enter Amount to transfer: $')
 
-
-
+		return transaction
 
 	

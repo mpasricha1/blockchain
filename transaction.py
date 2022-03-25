@@ -11,6 +11,11 @@ class Transaction:
 		self.value = value 
 		self.time = datetime.datetime.now()
 
+	def print_self(self):
+		print(self.sender)
+		print(self.recipient)
+		print(self.value)
+
 	def to_dict(self): 
 		if self.sender == 'Genesis':
 			identity = 'Genesis'
