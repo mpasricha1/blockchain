@@ -17,6 +17,7 @@ db = DBConnector()
 
 def initiate_block(user):
 	t0 = Transaction('Genesis', user.identity, 0)
+	t0.print_self()
 	block0 = Block()
 	block0.previous_block_hash = None
 	block0.nonce = None
@@ -91,9 +92,6 @@ def logged_in(user):
 			receiver = db.get_user(trans['user_name'])
 			receiver_client = cPickle.loads(receiver[5])
 			create_transaction(user.client, receiver_client, trans['amount'])
-
-
-
 
 		if choice == '3':
 			do_more = False
